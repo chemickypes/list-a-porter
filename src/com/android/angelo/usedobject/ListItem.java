@@ -17,7 +17,7 @@ public class ListItem {
 	private DateFormat dateformat;
 	
 	public ListItem(String name, String desc, Date date, BigDecimal value)  {
-		this.dateformat = new SimpleDateFormat("dd/MM/yyyy",Locale.ITALIAN);
+		setDateFormat(2);
 		
 		setmName(name);
 		setmDesc(desc);
@@ -27,8 +27,8 @@ public class ListItem {
 	}
 
 	public ListItem(String name, String desc, String date, String value) throws ParseException {
-		this.dateformat = new SimpleDateFormat("dd/MM/yyyy",Locale.ITALIAN);
 		
+		setDateFormat(2);
 		setmName(name);
 		setmDesc(desc);
 		setmDate(date);
@@ -83,6 +83,14 @@ public class ListItem {
 	
 	public void setmValue(String value){
 		this.mValue = new BigDecimal(value);
+	}
+	
+	public void setDateFormat(int format){
+		if(format==1){
+			this.dateformat = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
+		}else{
+			this.dateformat = new SimpleDateFormat("dd/MM/yyyy",Locale.ITALIAN);
+		}
 	}
 
 }
