@@ -5,6 +5,10 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_settings">Settings</string>
+    
+     <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    
     <string-array name="colors">
         <item >Black</item>
         <item >Blue</item>
@@ -24,6 +28,11 @@
     <string-array name="formatdate_value">
         <item >1</item>
         <item >2</item>
+    </string-array>
+    
+    <string-array name="toast_string">
+        <item >Toast #1</item>
+        <item >Toast #2</item>
     </string-array>
 
 </resources>

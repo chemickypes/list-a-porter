@@ -24,6 +24,7 @@ public class ListAdapter extends BaseAdapter {
 		public TextView bigD;
 	}
 	
+	boolean orientation ; //true landscape, false portrait
 	ArrayList<ListItem> data;
 	Context mContext;
 	LayoutInflater mLayoutInflater;
@@ -34,6 +35,15 @@ public class ListAdapter extends BaseAdapter {
 		this.mContext = context;
 		this.mLayoutInflater = (LayoutInflater) 
 				this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.orientation = false;
+	}
+	
+	public ListAdapter(Context context, ArrayList<ListItem> data,boolean orientation) {
+		this.data = data;
+		this.mContext = context;
+		this.mLayoutInflater = (LayoutInflater) 
+				this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.orientation = orientation;
 	}
 
 	@Override
@@ -67,7 +77,7 @@ public class ListAdapter extends BaseAdapter {
 			mViewHolder = (ViewHolder) view.getTag();
 		}
 		final ListItem item = (ListItem) data.get(position);
-		mViewHolder.nome.setText(item.getmName());
+		mViewHolder.nome.setText(item.getmName(orientation));
 		String color ;
 		if(pr.getString("colors","1").equals("2")){
 			color="#000066";
@@ -77,7 +87,7 @@ public class ListAdapter extends BaseAdapter {
 			color="#000000";
 		}
 		mViewHolder.nome.setTextColor(Color.parseColor(color));
-		mViewHolder.desc.setText(item.getmDesc());
+		mViewHolder.desc.setText(item.getmDesc(orientation));
 		if(pr.getString("formatdata", "2").equals("1")){
 			item.setDateFormat(1);
 		}else{

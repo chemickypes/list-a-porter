@@ -39,6 +39,15 @@ public class ListItem {
 	public String getmName() {
 		return mName;
 	}
+	//questo metodo restituisce la stringa a seconda se ci si trovi
+	//in orientation portrait o landscape
+	public String getmName(boolean orientation){
+		if(orientation==false && this.mName.length()>18){	
+			return this.mName.substring(0, 15)+"...";	
+		}else{
+			return getmName();
+		}
+	}
 
 	public void setmName(String mName) {
 		this.mName = mName;
@@ -46,6 +55,17 @@ public class ListItem {
 
 	public String getmDesc() {
 		return mDesc;
+	}
+	//questo metodo restituisce la stringa a seconda se ci si trovi
+		//in orientation portrait o landscape
+	public String getmDesc(boolean orientation){
+		if(orientation==false && this.mDesc.length()>18){
+			return this.mDesc.substring(0, 15)+"...";
+		}else if(this.mDesc.length()>58){
+			return this.mDesc.substring(0, 55)+"...";
+		}else{
+			return getmDesc();
+		}
 	}
 
 	public void setmDesc(String mDesc) {
