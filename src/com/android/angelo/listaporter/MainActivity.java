@@ -3,10 +3,13 @@ package com.android.angelo.listaporter;
 import java.text.ParseException;
 import java.util.ArrayList; 
 
+import com.android.angelo.usedobject.DrawerListener;
 import com.android.angelo.usedobject.ListItem;
 import com.android.angelo.widget.ListAdapter;
+import com.android.angelo.usedobject.UndoBarController;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -19,15 +22,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-public class MainActivity extends ListActivity implements ListView.OnItemClickListener {
+public class MainActivity extends ListActivity implements ListView.OnItemClickListener,
+														ListView.OnItemLongClickListener,
+														UndoBarController.UndoListener{
 
 	ArrayList<ListItem> mData; 
 	ListAdapter mAdapter;
 	DrawerLayout mDrawer;
 	ListView mDrawerList;
 	ActionBarDrawerToggle mActionBarDrawerToggle;
+	
+	UndoBarController mUndoBarController;
 	 
 	String[] mStringVector;
 	CharSequence mTitle;
@@ -46,6 +52,9 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 		getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 		
+        mUndoBarController = new UndoBarController(findViewById(R.id.undobar), this);
+        getListView().setOnItemClickListener(this);
+        getListView().setOnItemLongClickListener(this);
 	}
 	
 	@Override
@@ -67,9 +76,21 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 	
 	@Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "DrawerList item clicked: "+mStringVector[position],
-        		Toast.LENGTH_LONG).show();
+		mUndoBarController.showUndoBar(
+                false,
+                getString(R.string.undobar_sample_message),
+                null);
     }
+	
+	@Override
+	public boolean onItemLongClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		mUndoBarController.showUndoBar(
+                false,
+                getString(R.string.undobar_sample_message),
+                null);
+		return true;
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,10 +116,16 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 	}
 	
 	 @Override
-	    public boolean onPrepareOptionsMenu(Menu menu) {
-	        // If the nav drawer is open, hide action items related to the content view	        
-	        return super.onPrepareOptionsMenu(menu);
+	 public boolean onPrepareOptionsMenu(Menu menu) {
+	  // If the nav drawer is open, hide action items related to the content view	        
+	      return super.onPrepareOptionsMenu(menu);
 	    }
+	 
+	 @Override
+	public void onUndo(Parcelable token) {
+		// TODO Auto-generated method stub
+			
+	}
 	
 	private void openSettings(){
 		Intent intent = new Intent();
@@ -129,7 +156,7 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 	     mStringVector = getResources().getStringArray(R.array.toast_string);
 	        
 	     mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item,mStringVector));
-	     mDrawerList.setOnItemClickListener(this);
+	     mDrawerList.setOnItemClickListener(new DrawerListener(mStringVector, this));
 	        
 	        
 	}
@@ -150,5 +177,9 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 		}
 		Log.d("size data", ""+mData.size());
 	}
+
+	
+
+	
 
 }

@@ -9,6 +9,9 @@
      <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     
+     <string name="undobar_sample_message">Item Deleted</string>
+    <string name="undo">Undo</string>
+    
     <string-array name="colors">
         <item >Black</item>
         <item >Blue</item>
