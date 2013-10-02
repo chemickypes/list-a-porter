@@ -5,8 +5,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="14" />
+        android:minSdkVersion="16"
+        android:targetSdkVersion="16" />
 
     <application
         android:allowBackup="true"
@@ -24,11 +24,19 @@
         </activity>
         <activity
             android:name="com.android.angelo.listaporter.SettingsActivity"
-            android:label="@string/title_activity_settings" 
-            android:parentActivityName="com.android.angelo.listaporter.MainActivity">
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="com.android.angelo.listaporter.MainActivity" >
             <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.android.angelo.listaporter.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.android.angelo.listaporter.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.android.angelo.listaporter.ShowItemActivity"
+            android:label="@string/title_activity_show_item"
+            android:parentActivityName="com.android.angelo.listaporter.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.android.angelo.listaporter.MainActivity" />
         </activity>
     </application>
 

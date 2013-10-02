@@ -54,15 +54,12 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 	
 	UndoBarController mUndoBarController;
 	
-	ShowItemFragment mShowItemFragment = null;
 	 
 	String[] mStringVector;
 	CharSequence mTitle;
 	CharSequence mDrawerTitle;
 	boolean isDrawerVisible;
 	
-	static boolean isFragmentItemVisible = false;
-	static ListItem itemSelected;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +77,8 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
         mUndoBarController = new UndoBarController(findViewById(R.id.undobar), this);
         getListView().setOnItemClickListener(this);
         getListView().setOnItemLongClickListener(this);
+        
+
 	}
 	
 	@Override
@@ -98,18 +97,18 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 		mAdapter = new ListAdapter(this, mData,orientation);
 		setListAdapter(mAdapter);
 		
-		Log.d("isFragmentVisible",String.valueOf(isFragmentItemVisible));
-		//controllo se il fragment delle informazioni è aperto. In caso lo riapro
-		setShowItemFragment();
+
 
 	}
 	
 	@Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		itemSelected = mData.get(position);
-		this.mShowItemFragment.setInfo(itemSelected);
-		this.mShowItemFragment.viewThis();
-		isFragmentItemVisible = true;
+		Intent intent = new Intent();
+		Bundle bundle = new Bundle();
+		bundle.putParcelable("item", mData.get(position));
+		intent.putExtras(bundle);
+        intent.setClass(MainActivity.this, ShowItemActivity.class);
+        startActivityForResult(intent, 0);
     }
 	
 	@Override
@@ -155,9 +154,7 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 	 public void onBackPressed(){
 		 if(isDrawerVisible){
 			 mDrawer.closeDrawer(mDrawerList);
-		 }else if(mShowItemFragment.visible){
-			 mShowItemFragment.hideThis();
-			 isFragmentItemVisible = false;
+		 
 		 }else{
 			 super.onBackPressed();
 		 }
@@ -206,19 +203,8 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 	        
 	}
 	
-	private void setShowItemFragment(){
-			this.mShowItemFragment = 
-				(ShowItemFragment) getFragmentManager().findFragmentById(R.id.fr_show_item);
-			
-			if(isFragmentItemVisible == true){
-				this.mShowItemFragment.setInfo(itemSelected);
-				this.mShowItemFragment.viewThis();
-				Log.d("Fragmenst setting","true");
-			}else{
-				this.mShowItemFragment.hideThis();
-				Log.d("Fragmenst setting","false");
-			}
-	}
+	
+	
 	
 	//make a static list
 	private void setDataArrayList(){
@@ -236,6 +222,7 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 		}
 		Log.d("size data", ""+mData.size());
 	}
+	
 
 	
 

@@ -7,14 +7,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.annotation.SuppressLint;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class ListItem {
+
+public class ListItem implements Parcelable{
 	private String mName;
 	private String mDesc;
 	private Date mDate;
 	private BigDecimal mValue;
 	
 	private DateFormat dateformat;
+	private int intDateformat;
 	
 	public ListItem(String name, String desc, Date date, BigDecimal value)  {
 		setDateFormat(2);
@@ -34,6 +39,14 @@ public class ListItem {
 		setmDate(date);
 		setmValue(value);
 		
+	}
+	
+	public ListItem(Parcel parcel) throws ParseException{
+		setDateFormat(parcel.readInt());
+		setmName(parcel.readString());
+		setmDesc(parcel.readString());
+		setmDate(parcel.readString());
+		setmValue(parcel.readString());
 	}
 
 	public String getmName() {
@@ -106,11 +119,46 @@ public class ListItem {
 	}
 	
 	public void setDateFormat(int format){
+		intDateformat = format;
 		if(format==1){
 			this.dateformat = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
 		}else{
 			this.dateformat = new SimpleDateFormat("dd/MM/yyyy",Locale.ITALIAN);
 		}
 	}
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel parcel, int flag) {
+		parcel.writeInt(intDateformat);
+		parcel.writeString(mName);
+		parcel.writeString(mDesc);
+		parcel.writeString(getmDataString());
+		parcel.writeString(getmValueString());
+		
+	}
+	
+	 public final static Parcelable.Creator CREATOR = new Parcelable.Creator() {
+	        @Override
+	        public ListItem createFromParcel(Parcel source) {
+	            try {
+					return new ListItem(source);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return new ListItem("None", "None", new Date(), new BigDecimal("0000"));
+				}
+	        }
+
+	        @Override
+	        public ListItem[] newArray(int size) {
+	            return new ListItem[size];
+	        }
+	    };
 
 }

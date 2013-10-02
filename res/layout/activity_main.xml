@@ -10,11 +10,7 @@
          android:paddingLeft="8dp"
          android:paddingRight="8dp">
 
-	     <fragment android:name="com.android.angelo.listaporter.ShowItemFragment"
-            android:id="@+id/fr_show_item"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+	    
 	     
      	<ListView
          android:id="@android:id/list"
