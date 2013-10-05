@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:background="@drawable/listview_back" 
+    android:layout_marginTop="5dp">
 
     <TextView
         android:id="@+id/textView_Nome"
@@ -34,7 +36,8 @@
         android:layout_alignParentRight="true"
         android:textAppearance="?android:attr/textAppearanceSmall" 
         android:layout_marginRight="5dp"
-        android:layout_marginTop="2dp"/>
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"/>
 
     <TextView
         android:id="@+id/textView_BigD"
@@ -45,6 +48,7 @@
         android:layout_alignParentRight="true"
         android:textAppearance="?android:attr/textAppearanceSmall" 
         android:layout_marginRight="5dp"
-        android:layout_marginTop="2dp"/>
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"/>
 
 </RelativeLayout>

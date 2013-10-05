@@ -4,8 +4,9 @@ import java.text.ParseException;
 import java.util.ArrayList; 
 
 import com.android.angelo.usedobject.ListItem;
+import com.android.angelo.widget.ListAdaprterLikeGP;
 import com.android.angelo.widget.ListAdapter;
-import com.android.angelo.usedobject.UndoBarController;
+import com.android.angelo.usedobject.UndoBarController; 
 
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -47,7 +48,8 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 	}
 		
 	ArrayList<ListItem> mData; 
-	ListAdapter mAdapter;
+//	ListAdapter mAdapter;
+	ListAdaprterLikeGP mAdapter;
 	DrawerLayout mDrawer;
 	ListView mDrawerList;
 	ActionBarDrawerToggle mActionBarDrawerToggle;
@@ -78,6 +80,7 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
         getListView().setOnItemClickListener(this);
         getListView().setOnItemLongClickListener(this);
         
+        
 
 	}
 	
@@ -94,7 +97,7 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 		super.onResume();
 		boolean orientation = (getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE)?
 				true:false;
-		mAdapter = new ListAdapter(this, mData,orientation);
+		mAdapter = new ListAdaprterLikeGP(this, mData,orientation);
 		setListAdapter(mAdapter);
 		
 
@@ -209,7 +212,7 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 	//make a static list
 	private void setDataArrayList(){
 		mData = new ArrayList<ListItem>();
-		for(int i = 1;i<11;i++){
+		for(int i = 1;i<21;i++){
 			
 			try {
 				mData.add(new ListItem("Item "+i, "Object Item  #"+i, 
