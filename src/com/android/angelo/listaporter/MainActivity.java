@@ -61,6 +61,7 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 	CharSequence mTitle;
 	CharSequence mDrawerTitle;
 	boolean isDrawerVisible;
+	static boolean isServiceStarted = false;
 	
 	
 	@Override
@@ -73,13 +74,14 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 		setNavigationDrawer();
 		setDataArrayList(); 
 		
+		
+		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 		
         mUndoBarController = new UndoBarController(findViewById(R.id.undobar), this);
         getListView().setOnItemClickListener(this);
-        getListView().setOnItemLongClickListener(this);
-        
+        getListView().setOnItemLongClickListener(this); 
         
 
 	}
@@ -87,6 +89,15 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 	@Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        
+        try{
+    		Bundle bun = getIntent().getExtras();
+    		ListItem item = (ListItem) bun.getParcelable("newItem");
+    		mData.add(item);
+    		}catch(NullPointerException ex){
+    			
+    		}
+        
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mActionBarDrawerToggle.syncState();
     }
@@ -99,7 +110,7 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 				true:false;
 		mAdapter = new ListAdaprterLikeGP(this, mData,orientation);
 		setListAdapter(mAdapter);
-		
+		if(!isServiceStarted) startNotificationService();
 
 
 	}
@@ -206,7 +217,11 @@ public class MainActivity extends ListActivity implements ListView.OnItemClickLi
 	        
 	}
 	
-	
+	private void startNotificationService(){
+		isServiceStarted = true;
+		Intent service = new Intent(this,NotificationService.class);
+		startService(service);
+	}
 	
 	
 	//make a static list
